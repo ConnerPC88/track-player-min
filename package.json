@@ -12,7 +12,9 @@
   "dependencies": {
     "expo": "^52.0.46",
     "react": "^18.3.1",
-    "react-native": "0.76.9"
+    "react-native": "0.76.9",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-track-player": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

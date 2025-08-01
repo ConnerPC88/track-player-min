@@ -1,6 +1,12 @@
 {
   "expo": {
     "name": "track-player-min",
-    "newArchEnabled": false
+    "newArchEnabled": false,
+    "android": {
+      "package": "com.connerpc.trackplayermin"
+    },
+    "ios": {
+      "bundleIdentifier": "com.connerpc.trackplayermin"
+    }
   }
 }
