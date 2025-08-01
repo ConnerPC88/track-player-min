@@ -1,4 +1,6 @@
 {
-  "name": "TrackPlayerMin",
-  "displayName": "TrackPlayerMin"
+  "expo": {
+    "name": "track-player-min",
+    "newArchEnabled": false
+  }
 }
