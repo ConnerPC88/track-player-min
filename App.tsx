@@ -22,70 +22,71 @@ import TrackPlayer, {
   Event,
 } from 'react-native-track-player';
 
-const setupPlayer = async () => {
-  await TrackPlayer.setupPlayer({ autoHandleInterruptions: true });
-  TrackPlayer.addEventListener(Event.MetadataCommonReceived, data => {
-    console.log('track metadata:', data);
-  });
-  TrackPlayer.addEventListener(Event.MetadataChapterReceived, data => {
-    console.log('audio chapter metadata:', data);
-  });
-  TrackPlayer.addEventListener(Event.PlaybackError, data => {
-    console.log('playback error:', data);
-  });
-  await TrackPlayer.updateOptions({
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SeekTo,
-      Capability.Stop,
-      Capability.JumpForward,
-      Capability.JumpBackward,
-    ],
-    compactCapabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.Stop,
-      Capability.JumpForward,
-      Capability.JumpBackward,
-    ],
-
-    notificationCapabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.Stop,
-      Capability.JumpForward,
-      Capability.JumpBackward,
-    ],
-    forwardJumpInterval: 15,
-    backwardJumpInterval: 15,
-    android: {
-      appKilledPlaybackBehavior:
-        AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
-    },
-  });
-};
-
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
-  useEffect(() => {
-    setupPlayer();
-  }, []);
+  const setupPlayer = async () => {
+    await TrackPlayer.setupPlayer({ autoHandleInterruptions: true });
+    TrackPlayer.addEventListener(Event.MetadataCommonReceived, data => {
+      console.log('track metadata:', data);
+    });
+    TrackPlayer.addEventListener(Event.MetadataChapterReceived, data => {
+      console.log('audio chapter metadata:', data);
+    });
+    TrackPlayer.addEventListener(Event.PlaybackError, data => {
+      console.log('playback error:', data);
+    });
+    await TrackPlayer.updateOptions({
+      capabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.SeekTo,
+        Capability.Stop,
+        Capability.JumpForward,
+        Capability.JumpBackward,
+      ],
+      compactCapabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.Stop,
+        Capability.JumpForward,
+        Capability.JumpBackward,
+      ],
+
+      notificationCapabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.Stop,
+        Capability.JumpForward,
+        Capability.JumpBackward,
+      ],
+      forwardJumpInterval: 15,
+      backwardJumpInterval: 15,
+      android: {
+        appKilledPlaybackBehavior:
+          AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+      },
+    });
+  };
+
+  const startPlayer = async () => {
+    await TrackPlayer.load({
+      artist: 'samplelib',
+      duration: 1871,
+      id: '2349875987',
+      title: 'Music',
+      type: TrackType.Default,
+      url: 'https://download.samplelib.com/mp3/sample-15s.mp3',
+    });
+    await TrackPlayer.play();
+  };
 
   useEffect(() => {
-    TrackPlayer.load({
-      artist: 'Bill Parker',
-      artwork:
-        'https://vps.sermonaudio.com/resize_image/speakers/podcast/600/600/7463-0002.jpg',
-      duration: 1871,
-      id: '129241320364515',
-      title: 'Real Faith',
-      type: TrackType.Default,
-      url: 'https://cloud.sermonaudio.net/media/audio/high/129241320364515.mp3?ts=1733754717&language=eng',
-    });
-    TrackPlayer.play();
+    setupPlayer();
+    startPlayer();
   }, []);
+
+  useEffect(() => {}, []);
 
   const { playing } = useIsPlaying();
   const { position, duration } = useProgress();
@@ -115,34 +116,30 @@ function App() {
   const loadOriginalTrack = async () => {
     await TrackPlayer.reset();
     await TrackPlayer.load({
-      artist: 'Bill Parker',
-      artwork:
-        'https://vps.sermonaudio.com/resize_image/speakers/podcast/600/600/7463-0002.jpg',
+      artist: 'samplelib',
       duration: 1871,
-      id: '129241320364515',
-      title: 'Real Faith',
+      id: '2349875987',
+      title: 'Music',
       type: TrackType.Default,
-      url: 'https://cloud.sermonaudio.net/media/audio/high/129241320364515.mp3?ts=1733754717&language=eng',
+      url: 'https://download.samplelib.com/mp3/sample-15s.mp3',
     });
     await TrackPlayer.play();
   };
 
-  const loadNewTrack = async () => {
+  const loadSecondTrack = async () => {
     await TrackPlayer.reset();
     await TrackPlayer.load({
-      artist: 'Douglas Salyer',
-      artwork:
-        'https://vps.sermonaudio.com/resize_image/speakers/podcast/600/600/22398-0002.jpg',
-      duration: 3203,
-      id: '8425173741181',
-      title: 'The Vision of Dry Bones',
+      artist: 'onlinetestcase',
+      duration: 216,
+      id: '34582734',
+      title: '5MB',
       type: TrackType.Default,
-      url: 'https://cloud.sermonaudio.net/media/audio/high/8425173741181.mp3?ts=1754331195&language=eng',
+      url: 'https://onlinetestcase.com/wp-content/uploads/2023/06/5-MB-MP3.mp3',
     });
     await TrackPlayer.play();
   };
 
-  const loadNewTestTrack = async () => {
+  const loadThirdTrack = async () => {
     await TrackPlayer.reset();
     await TrackPlayer.load({
       artist: 'Test',
@@ -155,27 +152,26 @@ function App() {
     await TrackPlayer.play();
   };
 
+  const skipForward = async () => {
+    await TrackPlayer.seekBy(15);
+  };
+
+  const skipBackward = async () => {
+    await TrackPlayer.seekBy(-15);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View style={{ height: 700 }}>
-        <Text
-          style={{ marginTop: 150, alignSelf: 'center' }}
-          onPress={loadOriginalTrack}
-        >
-          Load original audio track
+      <View style={{ height: 700, alignItems: 'center' }}>
+        <Text style={{ marginTop: 150 }} onPress={loadOriginalTrack}>
+          Load original track
         </Text>
-        <Text
-          style={{ marginTop: 150, alignSelf: 'center' }}
-          onPress={loadNewTrack}
-        >
-          Load new audio track
+        <Text style={{ marginTop: 50 }} onPress={loadSecondTrack}>
+          Load 2nd track
         </Text>
-        <Text
-          style={{ marginTop: 150, alignSelf: 'center' }}
-          onPress={loadNewTestTrack}
-        >
-          Load new test track
+        <Text style={{ marginTop: 50 }} onPress={loadThirdTrack}>
+          Load 3rd track
         </Text>
         <View
           style={{
@@ -183,6 +179,7 @@ function App() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
+            marginTop: 100,
           }}
         >
           <Text style={{ color: 'red', fontSize: 32 }}>{timestampStart}</Text>
@@ -193,6 +190,12 @@ function App() {
             {playPauseText}
           </Text>
           <Text style={{ color: 'red', fontSize: 32 }}>{timestampEnd}</Text>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Text style={{ marginRight: 80 }} onPress={skipBackward}>
+            back
+          </Text>
+          <Text onPress={skipForward}>forward</Text>
         </View>
       </View>
     </View>
