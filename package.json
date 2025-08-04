@@ -6,23 +6,19 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "lint": "eslint .",
-    "start": "react-native start",
+    "start": "expo run:ios",
     "test": "jest"
   },
   "dependencies": {
     "expo": "^52.0.46",
     "react": "^18.3.1",
     "react-native": "0.76.9",
-    "react-native-reanimated": "~3.16.1",
     "react-native-track-player": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/runtime": "^7.26.0",
-    "@react-native-community/cli": "19.1.1",
-    "@react-native-community/cli-platform-android": "19.1.1",
-    "@react-native-community/cli-platform-ios": "19.1.1",
     "@react-native/babel-preset": "0.80.2",
     "@react-native/eslint-config": "0.80.2",
     "@react-native/metro-config": "0.76.3",
